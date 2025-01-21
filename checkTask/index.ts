@@ -31,7 +31,7 @@ export default async (req: Request) => {
   if (!user) {
     console.error('User not found');
     return new Response('Invalid auth user', {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json' },
       status: 401,
     });
   }

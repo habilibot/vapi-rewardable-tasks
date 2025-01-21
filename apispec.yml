@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: Rewardable Tasks VAPI
+  version: 1.0.0
+  description: Prefix all endpoints with /rewardable-tasks
+paths:
+  /listTasks:
+    post:
+      summary: List tasks
+      tags:
+        - Tasks
+      responses:
+        '200':
+          description: Task list
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Task'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+  /checkTask:
+    post:
+      summary: Check task whether it is completed
+      tags:
+        - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                telegramInitData:
+                  type: string
+                taskId:
+                  type: integer
+      responses:
+        '200':
+          description: Checked task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Task not found
+        '412':
+          description: Task is not completed
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        reward:
+          type: integer
+        type:
+          type: string
+          description: 'Type of task: JOIN_TELEGRAM_CHANNEL, REFERRAL, VISIT, etc.'
+        metadata:
+          type: object
+          description: 'Task-specific data'
+        taskStartedAt:
+          type: string
+          format: date-time
+        

@@ -1,2 +1,7 @@
 name: rewardable-tasks
 version: "0.1.0"
+schemas:
+  - rewardable_task
+dependencies:
+  clicker-game-essentials: "0.1.0"
+  
